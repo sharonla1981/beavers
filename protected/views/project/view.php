@@ -26,8 +26,12 @@ $this->menu=array(
 		'type_id',
 		'location_id',
 		'address',
-		'measure_id',
 		'currency_id',
 		'planned',
+		'uom_id',
+		'create_time',
+		'create_user_id',
+		'update_user_id',
+		'update_time',
 	),
 )); ?>

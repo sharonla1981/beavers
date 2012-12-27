@@ -37,11 +37,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'measure_id'); ?>
-		<?php echo $form->textField($model,'measure_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'currency_id'); ?>
 		<?php echo $form->textField($model,'currency_id'); ?>
 	</div>
@@ -49,6 +44,31 @@
 	<div class="row">
 		<?php echo $form->label($model,'planned'); ?>
 		<?php echo $form->textField($model,'planned'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'uom_id'); ?>
+		<?php echo $form->textField($model,'uom_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'create_time'); ?>
+		<?php echo $form->textField($model,'create_time'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'create_user_id'); ?>
+		<?php echo $form->textField($model,'create_user_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'update_user_id'); ?>
+		<?php echo $form->textField($model,'update_user_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'update_time'); ?>
+		<?php echo $form->textField($model,'update_time'); ?>
 	</div>
 
 	<div class="row buttons">

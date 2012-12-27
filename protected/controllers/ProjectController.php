@@ -6,7 +6,14 @@ class ProjectController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/lefty';
+
+         /**
+         * @var private property which holds a user instance
+         */
+        
+        private $_user = null;
+
 
 	/**
 	 * @return array action filters
@@ -16,8 +23,36 @@ class ProjectController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+                        'userContext + create,update',
 		);
 	}
+        
+        
+        public function filterUserContext($filterChain)
+        {
+            $userId = null;
+            if(isset(Yii::app()->user->user_id))
+            {
+                $userId = Yii::app()->user->user_id;
+                
+            }
+            $this->loadUser($userId);
+            $filterChain->run();
+        }
+        
+        protected function loadUser($user_id)
+        {
+            if ($this->_user===null)
+            {
+                $this->_user= User::model()->findByPk($user_id);
+                if ($this->_user===null)
+                {
+                    throw new CHttpException(404,'The requested user does not exsit.');
+                }
+            }
+            
+            return $this->_user;
+        }
 
 	/**
 	 * Specifies the access control rules.
@@ -28,7 +63,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','create'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -63,15 +98,28 @@ class ProjectController extends Controller
 	public function actionCreate()
 	{
 		$model=new Project;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+          
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->project_id));
+			                       
+                        if($model->save())
+                        {
+                            $beaverArr = array('project_id'=>$model->getPrimaryKey(),'user_id'=>Yii::app()->user->user_id,'create_time'=>date('Y-m-d H:i:s', time()),'update_time'=>date('Y-m-d H:i:s', time()),
+                            'create_user_id'=>Yii::app()->user->user_id,'update_user_id'=>Yii::app()->user->user_id);
+                            $model->beavers = $beaverArr;
+                            $beaver = new Beaver();
+                            $beaver->attributes = $beaverArr;
+                            if ($beaver->save())
+                            {
+                                $this->redirect(array('view','id'=>$model->project_id));
+                            }
+                            else
+                            {
+                                $model->deleteByPk($model->getPrimaryKey());
+                            }
+                            
+                        }
 		}
 
 		$this->render('create',array(
@@ -122,7 +170,12 @@ class ProjectController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Project');
+                $criteria = new CDbCriteria;
+                $criteria->with = array('beavers');
+                
+		$dataProvider=new CActiveDataProvider('Project',
+                        array('criteria'=>$criteria));
+                $data = $dataProvider->getData();
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

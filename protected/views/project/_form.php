@@ -16,12 +16,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'project_id'); ?>
-		<?php echo $form->textField($model,'project_id'); ?>
-		<?php echo $form->error($model,'project_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'descr'); ?>
 		<?php echo $form->textField($model,'descr',array('size'=>60,'maxlength'=>200)); ?>
 		<?php echo $form->error($model,'descr'); ?>
@@ -46,12 +40,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'measure_id'); ?>
-		<?php echo $form->textField($model,'measure_id'); ?>
-		<?php echo $form->error($model,'measure_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'currency_id'); ?>
 		<?php echo $form->textField($model,'currency_id'); ?>
 		<?php echo $form->error($model,'currency_id'); ?>
@@ -61,6 +49,36 @@
 		<?php echo $form->labelEx($model,'planned'); ?>
 		<?php echo $form->textField($model,'planned'); ?>
 		<?php echo $form->error($model,'planned'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'uom_id'); ?>
+		<?php echo $form->textField($model,'uom_id'); ?>
+		<?php echo $form->error($model,'uom_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'create_time'); ?>
+		<?php echo $form->textField($model,'create_time'); ?>
+		<?php echo $form->error($model,'create_time'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'create_user_id'); ?>
+		<?php echo $form->textField($model,'create_user_id'); ?>
+		<?php echo $form->error($model,'create_user_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'update_user_id'); ?>
+		<?php echo $form->textField($model,'update_user_id'); ?>
+		<?php echo $form->error($model,'update_user_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'update_time'); ?>
+		<?php echo $form->textField($model,'update_time'); ?>
+		<?php echo $form->error($model,'update_time'); ?>
 	</div>
 
 	<div class="row buttons">

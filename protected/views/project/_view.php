@@ -25,17 +25,33 @@
 	<?php echo CHtml::encode($data->address); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('measure_id')); ?>:</b>
-	<?php echo CHtml::encode($data->measure_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('currency_id')); ?>:</b>
 	<?php echo CHtml::encode($data->currency_id); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('planned')); ?>:</b>
 	<?php echo CHtml::encode($data->planned); ?>
+	<br />
+
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('uom_id')); ?>:</b>
+	<?php echo CHtml::encode($data->uom_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
+	<?php echo CHtml::encode($data->create_time); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('create_user_id')); ?>:</b>
+	<?php echo CHtml::encode($data->create_user_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('update_user_id')); ?>:</b>
+	<?php echo CHtml::encode($data->update_user_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('update_time')); ?>:</b>
+	<?php echo CHtml::encode($data->update_time); ?>
 	<br />
 
 	*/ ?>

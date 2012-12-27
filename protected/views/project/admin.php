@@ -50,10 +50,14 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'type_id',
 		'location_id',
 		'address',
-		'measure_id',
-		/*
 		'currency_id',
+		/*
 		'planned',
+		'uom_id',
+		'create_time',
+		'create_user_id',
+		'update_user_id',
+		'update_time',
 		*/
 		array(
 			'class'=>'CButtonColumn',

@@ -28,6 +28,7 @@ class ProjCategoryController extends Controller
         
         public function filterProjectContext($filterChain)
         {
+            
             $filterChain->run();
         }
         

@@ -14,7 +14,29 @@ $this->menu=array(
 
 <h1>Projects</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php
+    /*foreach($model->bevers->beaver_id as $beaverId) 
+    $beaverId[]=$beaverId->beaver_id; */
+?> 
+
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+        'columns'=>array(
+            'descr',
+            //'currency.name',
+            array(
+                'name'=>'user',
+                'value'=>  function($data) {
+                    $beaverId = array();
+                    foreach ($data->beavers as $beaver)
+                    {
+                        $beaverId[] = $beaver->user_id;
+                    }
+                    return implode(', ', $beaverId);
+                }
+                
+            ),
+            //'beavers.user_id'
+        )
+	//'itemView'=>'_view',
 )); ?>

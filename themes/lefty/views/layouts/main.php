@@ -20,6 +20,7 @@
 <body>
 
     <div class="container" id="page">
+        
         <!--<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header --> 
@@ -29,18 +30,27 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Item','url'=>array('ProjItem/main')),
+                                array('label'=>'Project','url'=>array('Project/create')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
+            <div id="myHome"></div>
 	</div><!-- mainmenu -->
-
-	
+        
+        <style>
+            #myHome{left:0px;width:46px;height: 44px}
+            #myHome{background: url('images/img_home.gif') 0 0;}
+            #myHome{position: fixed; top:10px;left: 1500px;}
+     
+            
+        </style>
+            
 
 	<?php echo $content; ?>
-
+        
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>
