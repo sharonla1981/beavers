@@ -21,6 +21,7 @@
  * @property Area[] $areas
  * @property Beaver[] $beavers
  * @property ProjCategory[] $projCategories
+ * @property Type $type
  * @property CmbTblCurrency $currency
  */
 class Project extends CActiveRecord
@@ -73,6 +74,7 @@ class Project extends CActiveRecord
 			'areas' => array(self::HAS_MANY, 'Area', 'project_id'),
 			'beavers' => array(self::HAS_MANY, 'Beaver', 'project_id'),
 			'projCategories' => array(self::HAS_MANY, 'ProjCategory', 'project_id'),
+                        'type' => array(self::BELONGS_TO, 'Type', 'type_id'),
 			'currency' => array(self::BELONGS_TO, 'CmbTblCurrency', 'currency_id'),
 		);
 	}
@@ -84,13 +86,13 @@ class Project extends CActiveRecord
 	{
 		return array(
 			'project_id' => 'Project',
-			'descr' => 'Descr',
+			'descr' => 'Description',
 			'type_id' => 'Type',
 			'location_id' => 'Location',
 			'address' => 'Address',
 			'currency_id' => 'Currency',
 			'planned' => 'Planned',
-			'uom_id' => 'Uom',
+			'uom_id' => 'Unit Of Measure',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_user_id' => 'Update User',

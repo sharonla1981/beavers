@@ -8,7 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Beavers',
-       'theme'=>'lefty',
+        'theme'=>'lefty',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -17,11 +17,13 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+               // 'application.modules.user.models.*',
+               // 'application.modules.user.components.*',
 	),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
+		//'user',
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'!q2w3e4r5',
@@ -36,6 +38,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        'loginUrl' => array('/user/login'),
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -57,7 +60,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=beaverdb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '!q2w3e4r5',
+			'password' => 'laviesh12',
 			'charset' => 'utf8',
 		),
 		

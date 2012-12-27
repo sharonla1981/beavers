@@ -102,7 +102,10 @@ class ProjectController extends Controller
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
-			                       
+			$model->create_time =  date('Y-m-d H:i:s', time());
+                        $model->update_time = date('Y-m-d H:i:s', time());
+                        $model->create_user_id = Yii::app()->user->user_id;
+                        $model->update_user_id = 0;
                         if($model->save())
                         {
                             $beaverArr = array('project_id'=>$model->getPrimaryKey(),'user_id'=>Yii::app()->user->user_id,'create_time'=>date('Y-m-d H:i:s', time()),'update_time'=>date('Y-m-d H:i:s', time()),
@@ -112,6 +115,7 @@ class ProjectController extends Controller
                             $beaver->attributes = $beaverArr;
                             if ($beaver->save())
                             {
+                                Yii::app()->user->setState('project_id',$model->getPrimaryKey());
                                 $this->redirect(array('view','id'=>$model->project_id));
                             }
                             else

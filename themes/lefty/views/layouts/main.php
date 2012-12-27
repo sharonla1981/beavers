@@ -34,16 +34,43 @@
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                                /*array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
+                                array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
+                                array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),
+                                array('url'=>Yii::app()->getModule('user')->logoutUrl, 'label'=>Yii::app()->getModule('user')->t("Logout").' ('.Yii::app()->user->name.')', 'visible'=>!Yii::app()->user->isGuest),*/
+                                
 			),
 		)); ?>
-            <div id="myHome"></div>
+            <div id="myHome">
+                <?php if(isset(Yii::app()->user->project_id)) 
+                    { 
+                        echo Yii::app()->user->project_id; 
+                    }
+                    elseif (isset(Yii::app()->user->user_id))
+                    {
+                        
+                        $projects = Beaver::model()->findAll(array(
+                            'select'=>'*',
+                            'condition'=>'user_id='.Yii::app()->user->user_id,
+                            'limit'=>100
+                            //'params'=>array(':userId'=>Yii::app()->user->user_id)
+                        ));
+                        
+                        echo count($projects);
+                    }
+                    
+                    
+                    
+                        
+                ?>
+            </div>
 	</div><!-- mainmenu -->
         
         <style>
             #myHome{left:0px;width:46px;height: 44px}
-            #myHome{background: url('images/img_home.gif') 0 0;}
-            #myHome{position: fixed; top:10px;left: 1500px;}
+            #myHome{background: url('images/img_home.gif') 1px 0;}
+            #myHome{position: relative; top:-20px;left: 1000px;}
      
             
         </style>
