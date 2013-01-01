@@ -1,8 +1,4 @@
-<?php Yii::app()->clientScript->registerScriptFile("http://code.jquery.com/jquery-1.8.3.js"); ?>
-<?php Yii::app()->clientScript->registerScriptFile("http://cdn.kendostatic.com/2012.2.913/js/kendo.all.min.js"); ?>
-<link href="http://cdn.kendostatic.com/2012.2.913/styles/kendo.default.min.css" rel="stylesheet">
-<link href="http://cdn.kendostatic.com/2012.2.913/styles/kendo.common.min.css" rel="stylesheet"> 
-<link href="css/login.css" rel="stylesheet">
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
 
 
 <?php
@@ -35,7 +31,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 			<div>
 				<input type="submit" value="Log in" />
 				<a href="#">Lost your password?</a>
-				<a href="#">Register</a>
+				<a href="/beavers/index.php/user/registration">Register</a>
 			</div>
 		</form><!-- form -->
                 <?php $this->endWidget(); ?>

@@ -31,9 +31,9 @@ class ProjectController extends Controller
         public function filterUserContext($filterChain)
         {
             $userId = null;
-            if(isset(Yii::app()->user->user_id))
+            if(isset(Yii::app()->user->id))
             {
-                $userId = Yii::app()->user->user_id;
+                $userId = Yii::app()->user->id;
                 
             }
             $this->loadUser($userId);
@@ -44,7 +44,7 @@ class ProjectController extends Controller
         {
             if ($this->_user===null)
             {
-                $this->_user= User::model()->findByPk($user_id);
+                $this->_user= YumUser::model()->findByPk($user_id);
                 if ($this->_user===null)
                 {
                     throw new CHttpException(404,'The requested user does not exsit.');

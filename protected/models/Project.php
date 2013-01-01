@@ -7,7 +7,8 @@
  * @property integer $project_id
  * @property string $descr
  * @property integer $type_id
- * @property integer $location_id
+ * @property double $location_lat
+ * @property double $location_lon
  * @property string $address
  * @property integer $currency_id
  * @property double $planned
@@ -52,14 +53,14 @@ class Project extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('descr, type_id, location_id, address, currency_id, uom_id, create_time, create_user_id, update_user_id, update_time', 'required'),
-			array('type_id, location_id, currency_id, uom_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
-			array('planned', 'numerical'),
+			array('descr, type_id, location_lat, location_lon, address, currency_id, uom_id, create_time, create_user_id, update_user_id, update_time', 'required'),
+			array('type_id, currency_id, uom_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('location_lat, location_lon, planned', 'numerical'),
 			array('descr', 'length', 'max'=>200),
 			array('address', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('project_id, descr, type_id, location_id, address, currency_id, planned, uom_id, create_time, create_user_id, update_user_id, update_time', 'safe', 'on'=>'search'),
+			array('project_id, descr, type_id, location_lat, location_lon, address, currency_id, planned, uom_id, create_time, create_user_id, update_user_id, update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +75,7 @@ class Project extends CActiveRecord
 			'areas' => array(self::HAS_MANY, 'Area', 'project_id'),
 			'beavers' => array(self::HAS_MANY, 'Beaver', 'project_id'),
 			'projCategories' => array(self::HAS_MANY, 'ProjCategory', 'project_id'),
-                        'type' => array(self::BELONGS_TO, 'Type', 'type_id'),
+			'type' => array(self::BELONGS_TO, 'Type', 'type_id'),
 			'currency' => array(self::BELONGS_TO, 'CmbTblCurrency', 'currency_id'),
 		);
 	}
@@ -86,13 +87,14 @@ class Project extends CActiveRecord
 	{
 		return array(
 			'project_id' => 'Project',
-			'descr' => 'Description',
+			'descr' => 'Description','Descr',
 			'type_id' => 'Type',
-			'location_id' => 'Location',
+			'location_lat' => 'Location Latitude',
+			'location_lon' => 'Location Longitude',
 			'address' => 'Address',
 			'currency_id' => 'Currency',
 			'planned' => 'Planned',
-			'uom_id' => 'Unit Of Measure',
+			'uom_id' => 'Unit Of Measure','Uom',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_user_id' => 'Update User',
@@ -114,7 +116,8 @@ class Project extends CActiveRecord
 		$criteria->compare('project_id',$this->project_id);
 		$criteria->compare('descr',$this->descr,true);
 		$criteria->compare('type_id',$this->type_id);
-		$criteria->compare('location_id',$this->location_id);
+		$criteria->compare('location_lat',$this->location_lat);
+		$criteria->compare('location_lon',$this->location_lon);
 		$criteria->compare('address',$this->address,true);
 		$criteria->compare('currency_id',$this->currency_id);
 		$criteria->compare('planned',$this->planned);
@@ -128,13 +131,4 @@ class Project extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-        
-        /*public function behaviors()
-        {
-            return array(
-                'activerecord-relation'=>array(
-                    'class'=>'ext.yiiext.behaviors.activerecord-relation.EActiveRecordRelationBehavior',
-                    )
-                );
-        }*/
 }

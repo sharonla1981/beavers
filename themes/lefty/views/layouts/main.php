@@ -33,7 +33,7 @@
                                 array('label'=>'Project','url'=>array('Project/create')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 /*array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
                                 array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
@@ -69,7 +69,7 @@
         
         <style>
             #myHome{left:0px;width:46px;height: 44px}
-            #myHome{background: url('images/img_home.gif') 1px 0;}
+            #myHome{background: url('/beavers/images/img_home.gif') 1px 0;}
             #myHome{position: relative; top:-20px;left: 1000px;}
      
             

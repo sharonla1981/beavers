@@ -17,19 +17,27 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-               // 'application.modules.user.models.*',
-               // 'application.modules.user.components.*',
+                'application.modules.user.models.*',
+               
 	),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		//'user',
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'!q2w3e4r5',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
+                'registration' => array(),
+                'avatar' => array(),
+                'role' => array(),
+                'messages' => array(),
+                'usergroup' => array(),
+                'membership' => array(),
+                'profile' => array(),
+                'friendship' => array(),
+                'user' => array()
 		
 	),
 
@@ -38,10 +46,15 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-                        'loginUrl' => array('/user/login'),
+                        'class' => 'application.modules.user.components.YumWebUser',
+                        'loginUrl' => array('/user/user/login'),
+                        //'usersTable'=>'tbl_user'
 		),
+                'User'=>array(
+                    'class' => 'User',
+                  ),
 		// uncomment the following to enable URLs in path-format
-		/*
+		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -50,7 +63,7 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		*/
+		
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),
@@ -60,8 +73,9 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=beaverdb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'laviesh12',
+			'password' => '!q2w3e4r5',
 			'charset' => 'utf8',
+                        'tablePrefix' => '',
 		),
 		
 		'errorHandler'=>array(

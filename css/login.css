@@ -89,6 +89,7 @@
 }
 #content form { margin: 0 20px; position: relative }
 #content form input[type="text"],
+#content form select,
 #content form input[type="password"] {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -115,6 +116,7 @@
 }
 #content form input[type="text"] { background: #eae7e7 url(http://cssdeck.com/uploads/media/items/8/8bcLQqF.png) 0 12px no-repeat;}
 #content form input[type="text"]:focus,
+#content form select:focus,
 #content form input[type="password"]:focus {
 	-webkit-box-shadow: 0 0 2px #ed1c24 inset;
 	-moz-box-shadow: 0 0 2px #ed1c24 inset;

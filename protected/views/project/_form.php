@@ -3,7 +3,8 @@
 /* @var $model Project */
 /* @var $form CActiveForm */
 ?>
-<link href="css/login.css" rel="stylesheet">
+<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"); ?>
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -20,11 +21,10 @@
 		<?php echo $form->textField($model,'descr',array('size'=>60,'maxlength'=>200,'placeholder'=>$model->getAttributeLabel('descr'))); ?>
 		<?php echo $form->error($model,'descr'); ?>
 	</div>
-
 	<div class="row">
 		<?php //echo $form->labelEx($model,'type_id'); ?>
-                <?php //echo $form->dropDownList('type_id',$model->type_id) ?>
-		<?php echo $form->textField($model,'type_id',array('placeholder'=>$model->getAttributeLabel('type_id'))); ?>
+                <?php echo $form->dropDownList($model,'type_id',CHtml::listData(Type::model()->findAll(),'type_id','descr'), array('empty'=>'Project Type')); ?>
+		<?php //echo $form->textField($model,'type_id',array('placeholder'=>$model->getAttributeLabel('type_id'))); ?>
 		<?php echo $form->error($model,'type_id'); ?>
 	</div>
 
@@ -59,3 +59,22 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+ <script>
+	  function initialize() {
+        var input = document.getElementById('Project_address');
+		/*var options = {
+		  types: ['(cities)'],
+		  componentRestrictions: {country: 'IL'}
+		};*/
+        var searchBox = new google.maps.places.SearchBox(input);
+		
+        google.maps.event.addListener(searchBox, 'places_changed', function() {
+          var places = searchBox.getPlaces();
+		  
+		  alert(places[0].geometry.location);
+          });
+		}
+	  
+      google.maps.event.addDomListener(window, 'load', initialize);
+	  
+	</script>
