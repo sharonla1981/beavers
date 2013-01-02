@@ -48,10 +48,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'project_id',
 		'descr',
 		'type_id',
-		'location_id',
+		'location_lat',
+		'location_lon',
 		'address',
-		'currency_id',
 		/*
+		'currency_id',
 		'planned',
 		'uom_id',
 		'create_time',

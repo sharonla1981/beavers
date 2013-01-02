@@ -13,8 +13,8 @@
  * @property string $update_time
  *
  * The followings are the available model relations:
+ * @property Users $user
  * @property Project $project
- * @property User $user
  */
 class Beaver extends CActiveRecord
 {
@@ -60,8 +60,8 @@ class Beaver extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 

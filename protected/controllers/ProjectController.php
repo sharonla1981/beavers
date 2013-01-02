@@ -67,7 +67,7 @@ class ProjectController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','getCurrencyIdByCountryCode'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -96,27 +96,30 @@ class ProjectController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
-	{
+	{       
+                
 		$model=new Project;
-          
+                
+                $this->performAjaxValidation($model);
+                
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
 			$model->create_time =  date('Y-m-d H:i:s', time());
                         $model->update_time = date('Y-m-d H:i:s', time());
-                        $model->create_user_id = Yii::app()->user->user_id;
+                        $model->create_user_id = Yii::app()->user->id;
                         $model->update_user_id = 0;
                         if($model->save())
                         {
-                            $beaverArr = array('project_id'=>$model->getPrimaryKey(),'user_id'=>Yii::app()->user->user_id,'create_time'=>date('Y-m-d H:i:s', time()),'update_time'=>date('Y-m-d H:i:s', time()),
-                            'create_user_id'=>Yii::app()->user->user_id,'update_user_id'=>Yii::app()->user->user_id);
+                            $beaverArr = array('project_id'=>$model->getPrimaryKey(),'user_id'=>Yii::app()->user->id,'create_time'=>date('Y-m-d H:i:s', time()),'update_time'=>date('Y-m-d H:i:s', time()),
+                            'create_user_id'=>Yii::app()->user->id,'update_user_id'=>Yii::app()->user->id);
                             $model->beavers = $beaverArr;
                             $beaver = new Beaver();
                             $beaver->attributes = $beaverArr;
                             if ($beaver->save())
                             {
                                 Yii::app()->user->setState('project_id',$model->getPrimaryKey());
-                                $this->redirect(array('view','id'=>$model->project_id));
+                                $this->redirect('/beavers/index.php/site/index');
                             }
                             else
                             {
@@ -199,6 +202,18 @@ class ProjectController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionGetCurrencyIdByCountryCode()
+        {
+           $currency;
+           if (Yii::app()->request->isAjaxRequest && isset($_POST['country_code']))
+           { 
+               $country_code = $_POST['country_code'];
+               $currency = Currency::model()->findByAttributes(array('country'=>$country_code));
+           }
+           
+           echo CJSON::encode(array('currency_id'=>$currency->currency_id,'curreny_code'=>$currency->code,'currency_name'=>$currency->name));
+        }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

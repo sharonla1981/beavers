@@ -106,7 +106,7 @@
 	-ms-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
-	background: #eae7e7 url(http://cssdeck.com/uploads/media/items/8/8bcLQqF.png) 0 -50px no-repeat;
+	background: #eae7e7 url('/beavers/images/8bcLQqF.png') 0 -50px no-repeat;
 	border: 1px solid #c8c8c8;
 	color: #777;
 	font: 13px Helvetica, Arial, sans-serif;
@@ -114,7 +114,7 @@
 	padding: 15px 10px 15px 40px;
 	width: 80%;
 }
-#content form input[type="text"] { background: #eae7e7 url(http://cssdeck.com/uploads/media/items/8/8bcLQqF.png) 0 12px no-repeat;}
+#content form input[type="text"] { background: #eae7e7 url('/beavers/images/8bcLQqF.png') 0 12px no-repeat;}
 #content form input[type="text"]:focus,
 #content form select:focus,
 #content form input[type="password"]:focus {

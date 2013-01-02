@@ -17,8 +17,12 @@
 	<?php echo CHtml::encode($data->type_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('location_id')); ?>:</b>
-	<?php echo CHtml::encode($data->location_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('location_lat')); ?>:</b>
+	<?php echo CHtml::encode($data->location_lat); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('location_lon')); ?>:</b>
+	<?php echo CHtml::encode($data->location_lon); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('address')); ?>:</b>
@@ -29,11 +33,11 @@
 	<?php echo CHtml::encode($data->currency_id); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('planned')); ?>:</b>
 	<?php echo CHtml::encode($data->planned); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('uom_id')); ?>:</b>
 	<?php echo CHtml::encode($data->uom_id); ?>
 	<br />

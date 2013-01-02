@@ -27,8 +27,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'location_id'); ?>
-		<?php echo $form->textField($model,'location_id'); ?>
+		<?php echo $form->label($model,'location_lat'); ?>
+		<?php echo $form->textField($model,'location_lat'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'location_lon'); ?>
+		<?php echo $form->textField($model,'location_lon'); ?>
 	</div>
 
 	<div class="row">
