@@ -119,6 +119,7 @@ class ProjectController extends Controller
                             if ($beaver->save())
                             {
                                 Yii::app()->user->setState('project_id',$model->getPrimaryKey());
+                                Yii::app()->user->setState('beaver_id',$beaver->getPrimaryKey());
                                 $this->redirect('/beavers/index.php/site/index');
                             }
                             else

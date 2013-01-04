@@ -43,13 +43,23 @@
 			),
 		)); ?>
             <div id="myHome">
-                <?php if(isset(Yii::app()->user->project_id)) 
-                    { 
-                        echo Yii::app()->user->project_id; 
+                <?php 
+                $beaver;
+                if(isset(Yii::app()->user->beaver_id)) 
+                    {
+                        $beaver = Beaver::model()->findByPk(Yii::app()->user->beaver_id);
+                        //echo Yii::app()->user->project_id; 
+                        $project = $beaver->getRelated('project');
+                        
+                        echo 'Project: '.$project->descr;
+                        echo '<br />';
+                        echo 'Location: '.$project->address;
+                        
                     }
                     elseif (isset(Yii::app()->user->user_id))
                     {
                         
+                        //$project = Beaver::model()->findByPk(Yii::app()->user->beaver_id);
                         $projects = Beaver::model()->findAll(array(
                             'select'=>'*',
                             'condition'=>'user_id='.Yii::app()->user->user_id,
@@ -68,9 +78,9 @@
 	</div><!-- mainmenu -->
         
         <style>
-            #myHome{left:0px;width:46px;height: 44px}
-            #myHome{background: url('/beavers/images/img_home.gif') 1px 0;}
-            #myHome{position: relative; top:-20px;left: 1000px;}
+            #myHome{left:0px;width:300px;height: 44px;text-align: left}
+            /*#myHome{background: url('/beavers/images/img_home.gif') 1px 0;}*/
+            #myHome{position: relative; top:-20px;left: 850px;}
      
             
         </style>

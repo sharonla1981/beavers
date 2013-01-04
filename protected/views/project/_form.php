@@ -7,6 +7,7 @@
 <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 <?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
+
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -26,7 +27,7 @@
 	<div class="row" id="typesTextBox">
 		<?php /*echo $form->labelEx($model,'type_id'); ?>
                 <?php //echo $form->dropDownList($model,'type_id',CHtml::listData(Type::model()->findAll(),'type_id','descr'), array('empty'=>'Project Type'));  */?>
-                <?php echo CHtml::textField('typeText','',array('placeholder'=>$model->getAttributeLabel('type_id'),'readonly'=>'readonly')); ?>
+                <?php //echo CHtml::textField('typeText','',array('placeholder'=>$model->getAttributeLabel('type_id'),'readonly'=>'readonly')); ?>
 		<?php echo $form->hiddenField($model,'type_id'); ?>
                 <div id="typesDiv">
                 <?php 
@@ -53,7 +54,7 @@
 
 	<div class="row">
 		<?php //echo $form->labelEx($model,'currency_id'); ?>
-                <?php echo CHtml::textField('currencyText','',array('placeholder'=>$model->getAttributeLabel('currency_id'),'readonly'=>'readonly')); ?>
+                <?php //echo CHtml::textField('currencyText','',array('placeholder'=>$model->getAttributeLabel('currency_id'),'readonly'=>'readonly')); ?>
 		<?php echo $form->hiddenField($model,'currency_id'); ?>
 		<?php echo $form->error($model,'currency_id'); ?>
 	</div>
@@ -78,7 +79,25 @@
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
-
+<div id="navigation" style="display:none;">
+                    <ul>
+                        <li class="selected">
+                            <a href="#">Account</a>
+                        </li>
+                        <li>
+                            <a href="#">Personal Details</a>
+                        </li>
+                        <li>
+                            <a href="#">Payment</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings</a>
+                        </li>
+						<li>
+                            <a href="#">Confirm</a>
+                        </li>
+                    </ul>
+                </div>
 <!-- style -->
 <style>
     #typeList li {
@@ -98,30 +117,34 @@
 	-ms-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
-        background: #fff url(/beavers/images/Small-Grey-Icons1.gif) -7px 0px no-repeat;
+        background: #fff url('/beavers/images/Small-Grey-Icons1.gif') -7px 0px no-repeat;
         /*background-size: 20px 20px;*/
 	border: 1px solid #c8c8c8;	
 	font: 13px Helvetica, Arial, sans-serif;
 	margin: 0px 0 0px;
-	padding: 15px 10px 15px 40px;
+	padding: 15px 10px 15px 50px;
 	/*width: 80%;*/
+        margin: 10px;
         list-style-type: none;
-        
+        float: left;
     }
     
     #typeList li:hover {
-        background: #eae7e7 url(/beavers/images/Small-Grey-Icons1.gif) -7px 0px no-repeat;
+        background: /*#eae7e7*/ #F39814 url('/beavers/images/Small-Grey-Icons1.gif') -7px 0px no-repeat;
     }
-    #typesDiv { display: none; 
-                margin: -10px 0 0px;
-                z-index: 1;
-                position: absolute;
+    
+    #typeList .ui-selected {background: #F39814 url('/beavers/images/Small-Grey-Icons1.gif') -7px 0px no-repeat;}
+    #typesDiv { 
+                margin: -25px 0px 0px 5px;
+                /*z-index: 1;
+                position: absolute;*/
                 /*width: 300px;*/
     }
     /*input {
              background: #eae7e7 url(/images/icons.png) 0 -50px no-repeat;
          }*/
 </style>
+<!-- script -->
  <script>
      /**
       * create a google places address selection
@@ -164,7 +187,7 @@ function initialize() {
                             success: function(data){
                                //set the currency's form fields with the data
                                $('#Project_currency_id').val(data.currency_id);
-                               $('#currencyText').val(data.curreny_code + " - " + data.currency_name);
+                               //$('#currencyText').val(data.curreny_code + " - " + data.currency_name);
 
                             }
                             });
@@ -188,19 +211,19 @@ $(document).ready(function() {
            selectedName = $(this).find('.ui-selected').text();
             $('#Project_type_id').val(selectedID);
             $('#typeText').val(selectedName);
-            $('#typesDiv').hide();
+            //$('#typesDiv').hide();
 
         }
     });
     
     //dropdown list like div
-    $('#typesTextBox').live('mouseover',function(){
+    /*$('#typesTextBox').live('mouseover',function(){
         $('#typesDiv').show();
     });
 
         $('#typesTextBox').live('mouseout',function(){
         $('#typesDiv').hide();
-    });
+    });*/
     /****************************************************************/
     //address field
     $('#Project_address').focus(function(){
