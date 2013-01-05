@@ -17,7 +17,8 @@
  * @property Project $project
  */
 class Beaver extends CActiveRecord
-{
+{   
+        public $verifyCode; // Captcha
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -49,6 +50,7 @@ class Beaver extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('beaver_id, user_id, project_id, create_time, create_user_id, update_user_id, update_time', 'safe', 'on'=>'search'),
+                        array('verifyCode', 'captcha', 'allowEmpty'=>CCaptcha::checkRequirements() || !Yum::module()->enableCaptcha),
 		);
 	}
 

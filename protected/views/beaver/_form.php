@@ -4,25 +4,27 @@
 /* @var $form CActiveForm */
 ?>
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-<?php Yii::app()->clientScript->registerScriptFile("http://code.jquery.com/jquery-1.8.3.js"); ?>
-<?php Yii::app()->clientScript->registerScriptFile("http://code.jquery.com/ui/1.9.2/jquery-ui.js"); ?>
 
-<div id="tabs">
-        <ul>
-            <li><a href="#tabs-1">Basic Project's Details</a></li>
-            <li><a href="#tabs-2">Personal Details</a></li>
-            <li><a href="#tabs-3">Confirm</a></li>
-        </ul>
-        
-    </div>
+
+
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'beaver-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+        //'focus'=>array($userForm,'username'),
 )); ?>
+
+        <?php echo $form->errorSummary(array($model,$project,$userForm,$profile)); ?>
     
+        <?php echo $this->renderPartial('/project/_form',array('model'=>$project,'form'=>$form)); ?>
+      
+        
+      
+        <?php echo $this->renderPartial('user.views.registration.registration',array('form'=>$form,'userForm'=>$userForm,'profile'=>$profile)); ?>    
+       
+        
+    </div>
 <?php /*
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
@@ -74,6 +76,6 @@
 
 <script>
     $(function() {
-        $( "#tabs" ).tabs();
+        
     });
     </script>

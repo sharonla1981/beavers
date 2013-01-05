@@ -15,4 +15,4 @@ $this->menu=array(
 
 <h1>Create Beaver</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'project'=>$project,'user'=>$user)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'project'=>$project,'userForm'=>$userForm,'profile'=>$profile)); ?>

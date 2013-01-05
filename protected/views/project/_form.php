@@ -4,20 +4,25 @@
 /* @var $form CActiveForm */
 ?>
 <?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"); ?>
+<?php //Yii::app()->clientScript->registerScriptFile("http://code.jquery.com/jquery-1.8.3.js"); ?>
+<?php Yii::app()->clientScript->registerScriptFile("http://code.jquery.com/ui/1.9.2/jquery-ui.js"); ?>
 <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+<?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
+<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"); ?>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
+
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php /*$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'project-form',
 	'enableAjaxValidation'=>true,
-)); ?>
+)); */ ?>
 
 	<!--<p class="note">Fields with <span class="required">*</span> are required.</p> -->
-
-	<?php echo $form->errorSummary($model); ?>
+	<?php //echo $form->errorSummary($model); ?>
 
 	<div class="row">
 		<?php //echo $form->labelEx($model,'descr'); ?>
@@ -26,8 +31,8 @@
 	</div>
 	<div class="row" id="typesTextBox">
 		<?php /*echo $form->labelEx($model,'type_id'); ?>
-                <?php //echo $form->dropDownList($model,'type_id',CHtml::listData(Type::model()->findAll(),'type_id','descr'), array('empty'=>'Project Type'));  */?>
-                <?php //echo CHtml::textField('typeText','',array('placeholder'=>$model->getAttributeLabel('type_id'),'readonly'=>'readonly')); ?>
+                <?php echo $form->dropDownList($model,'type_id',CHtml::listData(Type::model()->findAll(),'type_id','descr'), array('empty'=>'Project Type'));  ?>
+                <?php echo CHtml::textField('typeText','',array('placeholder'=>$model->getAttributeLabel('type_id'),'readonly'=>'readonly')); */?>
 		<?php echo $form->hiddenField($model,'type_id'); ?>
                 <div id="typesDiv">
                 <?php 
@@ -70,14 +75,14 @@
 		<?php echo $form->textField($model,'uom_id',array('placeholder'=>$model->getAttributeLabel('uom_id'))); ?>
 		<?php echo $form->error($model,'uom_id'); ?>
 	</div>
-
+<?php /*
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
-     <br /><br /><br /><br /><br /><br /><br /><br />
+     <br /><br /><br /><br /><br /><br /><br /><br /> */ ?>
     
 
-<?php $this->endWidget(); ?>
+<?php //$this->endWidget(); ?>
 </div><!-- form -->
 <div id="navigation" style="display:none;">
                     <ul>

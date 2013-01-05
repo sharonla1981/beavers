@@ -28,7 +28,7 @@ class BeaverController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','captcha'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -44,7 +44,16 @@ class BeaverController extends Controller
 			),
 		);
 	}
-
+        
+        public function actions() {
+		return array(
+				'captcha' => array(
+					'class' => 'CCaptchaAction',
+					'backColor' => 0xFFFFFF,
+					),
+				);
+	}
+        
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -63,10 +72,13 @@ class BeaverController extends Controller
 	public function actionCreate()
 	{
 		$model=new Beaver;
-                $user = new YumUser;
+                $userForm = new YumRegistrationForm;
                 $project = new Project;
+                $profile = new YumProfile;
+                
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation(array($model,$project,$userForm,$profile));
+                
 
 		if(isset($_POST['Beaver']))
 		{
@@ -76,7 +88,7 @@ class BeaverController extends Controller
 		}
 
 		$this->render('create',array(
-			'model'=>$model,'user'=>$user,'project'=>$project
+			'model'=>$model,'userForm'=>$userForm,'project'=>$project,'profile'=>$profile
 		));
 	}
 
