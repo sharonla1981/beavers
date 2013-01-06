@@ -18,8 +18,8 @@ class YumRegistrationForm extends YumUser {
 
 		$rules[] = array('username', 'required');
 		$rules[] = array('password, verifyPassword', 'required');
-		$rules[] = array('password', 'compare',
-				'compareAttribute'=>'verifyPassword',
+		$rules[] = array('verifyPassword', 'compare',
+				'compareAttribute'=>'password',
 				'message' => Yum::t("Retype password is incorrect."));
 		$rules[] = array('verifyCode', 'captcha', 'allowEmpty'=>CCaptcha::checkRequirements() || !Yum::module()->enableCaptcha);
 

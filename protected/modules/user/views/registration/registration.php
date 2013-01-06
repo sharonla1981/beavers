@@ -116,6 +116,8 @@ if ($profileFields) {
 		<br/><?php echo Yum::t('Letters are not case-sensitive.'); ?></p>
 	</div>
 	<?php endif; ?>
+</div><!-- form -->
+
 	<?php /*
 	<div class="row submit">
 		<?php echo CHtml::submitButton(Yum::t('Registration')); ?>

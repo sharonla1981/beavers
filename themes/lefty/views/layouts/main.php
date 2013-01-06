@@ -1,5 +1,18 @@
+<?php 
+    /*$fbconfig = Yum::module()->facebookConfig;
+    if(isset($fbconfig)) {
+        Yii::import('application.modules.user.vendors.facebook.*');
+        require_once('Facebook.php');
+        $facebook = new Facebook($fbconfig);
+        $fb_session = $facebook->getSession();
+        if($fb_session && Yii::app()->user->isGuest)
+                    if($this->action->id != 'login')
+                        $this->redirect($this->createUrl('/user/auth/login'));
+}*/
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
@@ -19,6 +32,7 @@
 
 <body>
 
+    
     <div class="container" id="page">
         
         <!--<div id="header">
@@ -30,7 +44,7 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Item','url'=>array('ProjItem/main')),
-                                array('label'=>'Project','url'=>array('Project/create')),
+                                array('label'=>'Beaver','url'=>array('/Beaver/create')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
@@ -97,4 +111,30 @@
 </div><!-- page -->
 
 </body>
+<?php /*if(isset($fbconfig)): ?>
+<div id="fb-root"></div>
+<script>
+window.fbAsyncInit = function() {
+    FB.init({
+        appId   : '<?php echo $facebook->getAppId(); ?>',
+        session : <?php echo json_encode($fb_session); ?>, // don't refetch the session when PHP already has it
+        status  : <?php echo $fbconfig['status']; ?>, // check login status
+        cookie  : <?php echo $fbconfig['cookie']; ?>, // enable cookies to allow the server to access the session
+        xfbml   : <?php echo $fbconfig['xfbml']; ?> // parse XFBML
+    });
+
+    // whenever the user logs in, we refresh the page
+    FB.Event.subscribe('auth.login', function() {
+        window.location.reload();
+    });
+};
+
+(function() {
+    var e = document.createElement('script');
+    e.src = document.location.protocol + '//connect.facebook.net/<?php echo $fbconfig['lang']; ?>/all.js';
+    e.async = true;
+    document.getElementById('fb-root').appendChild(e);
+}());
+</script>
+<?php endif; */?>
 </html>

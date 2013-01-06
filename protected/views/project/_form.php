@@ -84,25 +84,7 @@
 
 <?php //$this->endWidget(); ?>
 </div><!-- form -->
-<div id="navigation" style="display:none;">
-                    <ul>
-                        <li class="selected">
-                            <a href="#">Account</a>
-                        </li>
-                        <li>
-                            <a href="#">Personal Details</a>
-                        </li>
-                        <li>
-                            <a href="#">Payment</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings</a>
-                        </li>
-						<li>
-                            <a href="#">Confirm</a>
-                        </li>
-                    </ul>
-                </div>
+<div id="errorMsg"></div>
 <!-- style -->
 <style>
     #typeList li {
@@ -194,6 +176,10 @@ function initialize() {
                                $('#Project_currency_id').val(data.currency_id);
                                //$('#currencyText').val(data.curreny_code + " - " + data.currency_name);
 
+                            },
+                            
+                            error: function(data){
+                                //alert(this.url);
                             }
                             });
             },

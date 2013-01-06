@@ -28,11 +28,11 @@ class BeaverController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','captcha'),
+				'actions'=>array('index','view','captcha','create'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -67,28 +67,74 @@ class BeaverController extends Controller
 
 	/**
 	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * This perform the new Beaver = User(YumUser) & Project
 	 */
 	public function actionCreate()
 	{
-		$model=new Beaver;
+		//init the models for the _form view
+                $beaver=new Beaver;
+                /*  the YumUser Model have 2 models -> $userForm = basic user fields
+                 *  $profile = extra fields 
+                 */
                 $userForm = new YumRegistrationForm;
-                $project = new Project;
                 $profile = new YumProfile;
+                $project = new Project;
+                
+                //the YumRegistrationController has the registration functionality needed
+                $registration = new YumRegistrationController('YumRegistrationController');
                 
 		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation(array($model,$project,$userForm,$profile));
-                
+		$this->performAjaxValidation(array($beaver,$project,$profile,$userForm));
 
-		if(isset($_POST['Beaver']))
+                
+		if(isset($_POST['YumRegistrationForm']) && isset($_POST['Project']))       
 		{
-			$model->attributes=$_POST['Beaver'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->beaver_id));
+                        $project->attributes=$_POST['Project'];
+                        $userForm->attributes = $_POST['YumRegistrationForm'];
+			$profile->attributes = $_POST['YumProfile'];
+                                                
+                        if(!$userForm->hasErrors() && !$profile->hasErrors())
+                        {
+                            //User (User + Profile)
+                            $user = new YumUser;
+                            $user->register($userForm->username,$userForm->password,$profile->email);
+                            $profile->user_id = $user->id;
+                            $profile->save();
+                            
+                            //Project
+                            $project->create_time =  date('Y-m-d H:i:s', time());
+                            $project->update_time = date('Y-m-d H:i:s', time());
+                            $project->create_user_id = $user->id;
+                            $project->update_user_id = 0;
+                            if (!$project->hasErrors()) 
+                                { 
+                                    $project->save();    
+                                }
+                            
+                            
+                            //Beaver
+                            $beaver->create_time =  date('Y-m-d H:i:s', time());
+                            $beaver->update_time = date('Y-m-d H:i:s', time());
+                            $beaver->create_user_id = $user->id;
+                            $beaver->update_user_id = 0;
+                            $beaver->project_id = $project->project_id;
+                            $beaver->user_id = $user->id;
+                            if (!$beaver->hasErrors()) 
+                                { 
+                                    $beaver->save();
+                                }
+                            
+                            //send mail
+                            $facebook;
+                            $registration->sendRegistrationEmail($user);
+                            Yum::setFlash('Thank you for your registration. Please check your email.');
+                            $this->redirect('/beavers/index.php/user/login');
+                        }
+                        
 		}
 
 		$this->render('create',array(
-			'model'=>$model,'userForm'=>$userForm,'project'=>$project,'profile'=>$profile
+			'model'=>$beaver,'userForm'=>$userForm,'project'=>$project,'profile'=>$profile
 		));
 	}
 

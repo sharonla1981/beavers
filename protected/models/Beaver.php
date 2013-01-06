@@ -51,6 +51,8 @@ class Beaver extends CActiveRecord
 			// Please remove those attributes that should not be searched.
 			array('beaver_id, user_id, project_id, create_time, create_user_id, update_user_id, update_time', 'safe', 'on'=>'search'),
                         array('verifyCode', 'captcha', 'allowEmpty'=>CCaptcha::checkRequirements() || !Yum::module()->enableCaptcha),
+
+                       
 		);
 	}
 

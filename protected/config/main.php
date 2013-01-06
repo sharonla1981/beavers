@@ -18,6 +18,8 @@ return array(
 		'application.models.*',
 		'application.components.*',
                 'application.modules.user.models.*',
+                'application.modules.user.controllers.*',
+                'application.vendors.*',
                
 	),
 
@@ -37,9 +39,20 @@ return array(
                 'membership' => array(),
                 'profile' => array(),
                 'friendship' => array(),
-                'user' => array()
+                'user' => array(
+                    /*'loginType' => 9,
+                    'facebookConfig'=>array(
+                    'appId'=>'133409120152484',
+                    'secret'=>'c1c201289cccf3f801618f592a864ca3',
+                    'domain'=>'localhost',
+                    'status'=>true,
+                    'xfbml'=>true,
+                    'cookie'=>true,
+                    'lang'=>'en_US'
+                    )*/
+               ),
 		
-	),
+            ),
 
 	// application components
 	'components'=>array(
@@ -47,7 +60,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
                         'class' => 'application.modules.user.components.YumWebUser',
-                        'loginUrl' => array('/user/user/login'),
+                        //'loginUrl' => array('/user/user/login'),
                         //'usersTable'=>'tbl_user'
 		),
                 'User'=>array(
@@ -73,7 +86,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=beaverdb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '!q2w3e4r5',
+			'password' => 'laviesh12',
 			'charset' => 'utf8',
                         'tablePrefix' => '',
 		),
