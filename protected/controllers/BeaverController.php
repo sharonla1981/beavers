@@ -79,7 +79,13 @@ class BeaverController extends Controller
                 $userForm = new YumRegistrationForm;
                 $profile = new YumProfile;
                 $project = new Project;
-                //$fbData = $_POST['fbData'];
+                
+                //facebook data
+                $facebook = new Facebook(array(
+                   'appId'=>'485995968109492',
+                   'secret'=>'a52864946a84b8392291adb3be2999bd'
+                ));
+                                          
                 
                 //the YumRegistrationController has the registration functionality needed
                 $registration = new YumRegistrationController('YumRegistrationController');
@@ -89,29 +95,46 @@ class BeaverController extends Controller
 
                 
 		if(isset($_POST['YumRegistrationForm']) && isset($_POST['Project']) ||
-                            (isset($_POST['Project']) && isset($_POST['fbData'])))
+                            (isset($_POST['Project'])))
                                
 		{
+                        $userProfile = $facebook->getUser();
                         $project->attributes=$_POST['Project'];
-                        if (isset($_POST['fbData']))
-                        {
-                            $fbData = CJSON::decode($_POST['fbData']);
-                            $email = ($fbData['email']);
+                        if ($userProfile){
+                        try {
+                            $fbme = $facebook->api('/me');
+                            $userForm->setAttribute('username', $fbme['id']);
+                            $userForm->setAttribute('password', md5($fbme['id']));
+                            $profile->setAttribute('email', $fbme['email']);
+                            $profile->setAttribute('facebook_id', $fbme['id']);
+                            $profile->setAttribute('firstname', $fbme['first_name']);
+                            $profile->setAttribute('lastname', $fbme['last_name']);
+                            
+                            $user = new YumUser;
+                            $user->facebookRegister($fbme['first_name'].$fbme['id'],$fbme['last_name'].$fbme['id']);
+                            $profile->user_id = $user->id;
+                            $profile->save();
+                        
+                            } catch (FacebookApiException $e){
+                                error_log($e);
+                            }
                         }
+                        
                         else 
                         {
                             $userForm->attributes = $_POST['YumRegistrationForm'];
                             $profile->attributes = $_POST['YumProfile'];
-                        }
+                        
                                                 
-                        if(!$userForm->hasErrors() && !$profile->hasErrors())
-                        {
-                            //User (User + Profile)
-                            $user = new YumUser;
-                            $user->register($userForm->username,$userForm->password,$profile->email);
-                            $profile->user_id = $user->id;
-                            $profile->save();
-                            
+                            if(!$userForm->hasErrors() && !$profile->hasErrors())
+                            {
+                                //User (User + Profile)
+                                $user = new YumUser;
+                                $user->register($userForm->username,$userForm->password,$profile->email);
+                                $profile->user_id = $user->id;
+                                $profile->save();
+                            }
+                        }
                             //Project
                             $project->create_time =  date('Y-m-d H:i:s', time());
                             $project->update_time = date('Y-m-d H:i:s', time());
@@ -136,13 +159,13 @@ class BeaverController extends Controller
                                 }
                             
                             //send mail
-                            $facebook;
                             $registration->sendRegistrationEmail($user);
                             Yum::setFlash('Thank you for your registration. Please check your email.');
                             $this->redirect('/beavers/index.php/user/login');
-                        }
+                }
                         
-		}
+                        
+		
 
 		$this->render('create',array(
 			'model'=>$beaver,'userForm'=>$userForm,'project'=>$project,'profile'=>$profile

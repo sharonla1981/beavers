@@ -91,13 +91,19 @@ class YumUserController extends YumController {
 	{
 		$this->actionChangePassword($expired = true);
 	}
-
-	public function actionLogin() {
+        
+        public function actionLogin() {
 		// Do not show the login form if a session expires but a ajax request
 		// is still generated
-		if(Yii::app()->user->isGuest && Yii::app()->request->isAjaxRequest)
-			return false;
-		$this->redirect(array('/user/auth'));
+		if (YumUser::isFacebookUser()){
+                    $this->redirect(Yii::app()->homeUrl);
+                }
+                elseif(Yii::app()->user->isGuest && Yii::app()->request->isAjaxRequest)
+		{	
+                    return false;
+                    $this->redirect(array('/user/auth'));
+                }
+                
 	}
 
 	public function actionLogout() {

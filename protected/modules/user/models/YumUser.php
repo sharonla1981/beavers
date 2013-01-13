@@ -366,8 +366,49 @@ class YumUser extends YumActiveRecord {
 
 		return $this->save();
 	}
+        
+        public function facebookRegister($username=null, $password=null){
+            if ($username !== null && $password !== null) {
+			// Password equality is checked in Registration Form
+			$this->username = $username;
+			$this->password = $this->encrypt($password);
+		}
 
-	public function isPasswordExpired() {
+		$this->activationKey = 0;
+		$this->createtime = time();
+		$this->superuser = 0;
+
+		// Users stay banned until they confirm their email address.
+		$this->status = YumUser::STATUS_ACTIVATED;
+
+		if(Yum::module()->enableRoles) 
+			$this->roles = YumRole::getAutoassignRoles(); 
+
+		return $this->save();
+                
+        }
+        
+        //check if the user has registered with facebook
+        public static function isFacebookUser(){
+            $facebook = new Facebook(array(
+                   'appId'=>'485995968109492',
+                   'secret'=>'a52864946a84b8392291adb3be2999bd'
+                ));
+            $fb_uid = $facebook->getUser();
+            if ($fb_uid){
+                //$fbme = $facebook->api('/me');
+            
+                $profile = YumProfile::model()->findAllByAttributes(array('facebook_id'=>$fb_uid));
+                $user = $this->findByAttributes(array('username'=>$profile->user_id));
+            
+                $identity = new YumUserIdentity($user->username,$user->password);
+                Yii::app()->user->login($identity);
+            }
+            
+            
+        }
+
+        public function isPasswordExpired() {
 		$distance = Yii::app()->getModule('user')->password_expiration_time * 60 * 60;
 		return $this->lastpasswordchange - $distance > time();
 	}
@@ -391,15 +432,17 @@ class YumUser extends YumActiveRecord {
 						$user->status = self::STATUS_ACTIVATED;
 						if($user->save(false, array('activationKey', 'status'))) {
 							if(Yum::module()->enableActivationConfirmation) {
-								YumMessage::write($user, 1,
+								YumMessage::write($user->id, 1,
 										Yum::t('Your activation succeeded'),
 										YumTextSettings::getText('text_email_activation', array(
 												'{username}' => $user->username,
 												'{link_login}' =>
 												Yii::app()->controller->createUrl('//user/user/login'))));
 							}
-
+                                                        
+                                                        
 							return $user;
+                                                        
 						}
 					} 
 				}

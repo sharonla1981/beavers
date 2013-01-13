@@ -89,7 +89,7 @@ class YumRegistrationController extends YumController {
 			if (!isset($user->profile->email)) {
 				throw new CException(Yum::t('Email is not set when trying to send Registration Email'));
 			}
-			$activation_url = $this->createAbsoluteUrl('registration/activation', array(
+			$activation_url = $this->createAbsoluteUrl('user/registration/activation', array(
 						'key' => $user->activationKey,
 						'email' => $user->profile->email)
 					);
@@ -127,6 +127,7 @@ class YumRegistrationController extends YumController {
 		 * (more than once)
 		 */
 		public function actionActivation($email=null, $key=null) {
+                        $user = new YumUser;
 			// If already logged in, we dont activate anymore
 			if (!Yii::app()->user->isGuest)
 				$this->redirect(Yii::app()->user->returnUrl);
@@ -134,8 +135,14 @@ class YumRegistrationController extends YumController {
 			// If everything is set properly, let the model handle the Validation
 			// and do the Activation
 			if ($email != null && $key != null) {
-				if (YumUser::activate($email, $key) != false) 
-					$this->render(Yum::module()->activationSuccessView);
+                                $user = YumUser::activate($email, $key);
+				if ($user != false) {
+                                    Yum::setFlash('Your account has been activated');
+                                    $identity = new YumUserIdentity($user->username,$user->password);
+                                    $login = Yii::app()->user->login($identity);
+                                    $this->redirect(Yii::app()->homeUrl);
+                                }
+					//$this->render(Yum::module()->activationSuccessView);
 				else
 					$this->render(Yum::module()->activationFailureView);
 			}

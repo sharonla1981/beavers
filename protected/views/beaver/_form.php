@@ -25,8 +25,8 @@
         
         <div class="step" id="user">
             <div id="fb-user">
-                <fb:login-button show-faces=true size="xlarge" scope="email">Login With Facebook</fb:login-button>
-                <?php echo CHtml::hiddenField('fbData'); ?>
+                <fb:login-button show-faces=true size="xlarge" scope="email">Connect With Facebook</fb:login-button>
+                <?php //echo CHtml::hiddenField('fbData'); ?>
             </div>
             <div id="non-fb-user">
                 <?php echo $this->renderPartial('user.views.registration.registration',array('form'=>$form,'userForm'=>$userForm,'profile'=>$profile)); ?>    
@@ -109,10 +109,7 @@
     }*/
 </style>
 <script>
-    $(function() {
-        
-        
-        /*
+    /*
          * sign in by 3 steps
          */
         steps = $('.step');
@@ -120,6 +117,10 @@
         last = steps.last();
         first.show();
         var current = first;
+    $(function() {
+        
+        
+        
         
         $('#previous').hide();
         
@@ -215,8 +216,11 @@
         FB.Event.subscribe('auth.authResponseChange', function(response) {
             $('#non-fb-user').hide();
                 FB.api('/me',function(apiRes){
-                    json = JSON.stringify(apiRes);
-                    $('#fbData').val(json);
+                    /*json = JSON.stringify(apiRes);
+                    $('#fbData').val(json);*/
+                    //$('#next').hide();
+                    //$('#previous').hide();
+                    //current.next('div.step').show();
                 
                        
                 });
