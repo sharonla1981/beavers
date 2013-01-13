@@ -1,4 +1,4 @@
-#content {
+/*#content {
 	background: #f9f9f9;
 	background: -moz-linear-gradient(top,  rgba(248,248,248,1) 0%, rgba(249,249,249,1) 100%);
 	background: -webkit-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
@@ -17,7 +17,7 @@
 	position: relative;
 	text-align: center;
 	text-shadow: 0 1px 0 #fff;
-	width: 400px;
+	width: inherit;
 }
 #content h1 {
 	color: #7E7E7E;
@@ -86,7 +86,7 @@
 	transform: rotate(-3deg);
 	top: 0;
 	z-index: -2;
-}
+}*/
 #content form { margin: 0 20px; position: relative }
 #content form input[type="text"],
 #content form select,

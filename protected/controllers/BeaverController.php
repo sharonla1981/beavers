@@ -79,6 +79,7 @@ class BeaverController extends Controller
                 $userForm = new YumRegistrationForm;
                 $profile = new YumProfile;
                 $project = new Project;
+                //$fbData = $_POST['fbData'];
                 
                 //the YumRegistrationController has the registration functionality needed
                 $registration = new YumRegistrationController('YumRegistrationController');
@@ -87,11 +88,21 @@ class BeaverController extends Controller
 		$this->performAjaxValidation(array($beaver,$project,$profile,$userForm));
 
                 
-		if(isset($_POST['YumRegistrationForm']) && isset($_POST['Project']))       
+		if(isset($_POST['YumRegistrationForm']) && isset($_POST['Project']) ||
+                            (isset($_POST['Project']) && isset($_POST['fbData'])))
+                               
 		{
                         $project->attributes=$_POST['Project'];
-                        $userForm->attributes = $_POST['YumRegistrationForm'];
-			$profile->attributes = $_POST['YumProfile'];
+                        if (isset($_POST['fbData']))
+                        {
+                            $fbData = CJSON::decode($_POST['fbData']);
+                            $email = ($fbData['email']);
+                        }
+                        else 
+                        {
+                            $userForm->attributes = $_POST['YumRegistrationForm'];
+                            $profile->attributes = $_POST['YumProfile'];
+                        }
                                                 
                         if(!$userForm->hasErrors() && !$profile->hasErrors())
                         {

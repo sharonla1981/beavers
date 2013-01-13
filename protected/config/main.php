@@ -86,7 +86,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=beaverdb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'laviesh12',
+			'password' => '!q2w3e4r5',
 			'charset' => 'utf8',
                         'tablePrefix' => '',
 		),

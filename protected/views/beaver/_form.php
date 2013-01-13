@@ -5,14 +5,6 @@
 ?>
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/login.css" rel="stylesheet">
 
-<?php 
-$facebook = new Facebook(array(
-  'appId'  => '133409120152484',
-  'secret' => 'c1c201289cccf3f801618f592a864ca3',
-));
-
-?>
-
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -20,7 +12,10 @@ $facebook = new Facebook(array(
 	'enableAjaxValidation'=>true,
         //'focus'=>array($userForm,'username'),
 )); ?>
-    <div class="steps">
+    <div id="rightcolumn">
+            right column
+        </div>
+    <div class="steps" id="leftcolumn">
         
         <?php //echo $form->errorSummary(array($model,$project,$userForm,$profile)); ?>
         
@@ -29,43 +24,21 @@ $facebook = new Facebook(array(
         </div>
         
         <div class="step" id="user">
-            <div>
-            Login using OAuth 2.0 handled by the PHP SDK:
-            <a href="<?php echo $facebook->getLoginUrl(); ?>">Login with Facebook</a>
+            <div id="fb-user">
+                <fb:login-button show-faces=true size="xlarge" scope="email">Login With Facebook</fb:login-button>
+                <?php echo CHtml::hiddenField('fbData'); ?>
             </div>
-            <div id="face">
-            <?php 
-                    $fbUser = $facebook->getUser();
-                    if ($fbUser)
-                    {
-                        $user_profile = $facebook->api('/me');
-                        print_r($user_profile);
-                    }
-            ?>
-            <img src="https://graph.facebook.com/<?php //echo $fbUser; ?>/picture">
-            <?php             //print_r($user_profile); ?>
+            <div id="non-fb-user">
+                <?php echo $this->renderPartial('user.views.registration.registration',array('form'=>$form,'userForm'=>$userForm,'profile'=>$profile)); ?>    
             </div>
-                
-            <?php /*if (!Yii::app()->user->isGuest): ?>
-            <a href="<?php echo $this->createUrl('/user/auth/logout'); ?>" class="exit"><div></div>
-               <span>Logout</span>
-            </a>
-            <?php else: ?>
-            <fb:login-button perms="email,user_birthday,read_stream,publish_stream">
-            <span>Login With Facebook</span>
-            </fb:login-button>
-            <div id="faceId"><?php $json = file_get_contents('https://graph.facebook.com/me'); 
-                                    $detailObj = json_decode($json);
-                                    var_dump($detailObj);
-                ?>
-            </div> 
-            <?php endif; */ ?>
-            <?php echo $this->renderPartial('user.views.registration.registration',array('form'=>$form,'userForm'=>$userForm,'profile'=>$profile)); ?>    
+            
+            <div id="confirm">
+                <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+            </div>
         </div>
         
-        <div class="step" id="confirm">
-            <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-        </div>
+        
+        
         
     </div>
     <hr />
@@ -121,6 +94,9 @@ $facebook = new Facebook(array(
 
 </div><!-- form -->
 <style>
+    #leftcolumn { float: left}
+    #rightcolumn { float: right;display: none;}
+    
     .steps{
         position: relative;
         float: left;
@@ -134,6 +110,11 @@ $facebook = new Facebook(array(
 </style>
 <script>
     $(function() {
+        
+        
+        /*
+         * sign in by 3 steps
+         */
         steps = $('.step');
         first = steps.first();
         last = steps.last();
@@ -211,4 +192,35 @@ $facebook = new Facebook(array(
         
         
     });
+
+    //facebook
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '485995968109492', // App ID
+          channelUrl : '//localhost/beavers/channel.html', // Channel File
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true  // parse XFBML
+        });
+    
+        /*FB.login(function(response) {
+            if (response.authResponse) {
+                    FB.api('/me',function(apiRes){
+                       $('#non-fb-user').hide();
+                       
+                       
+                    });
+                }
+        });*/
+        FB.Event.subscribe('auth.authResponseChange', function(response) {
+            $('#non-fb-user').hide();
+                FB.api('/me',function(apiRes){
+                    json = JSON.stringify(apiRes);
+                    $('#fbData').val(json);
+                
+                       
+                });
+            
+        });
+    }
     </script>

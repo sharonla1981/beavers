@@ -1,18 +1,5 @@
-<?php 
-    /*$fbconfig = Yum::module()->facebookConfig;
-    if(isset($fbconfig)) {
-        Yii::import('application.modules.user.vendors.facebook.*');
-        require_once('Facebook.php');
-        $facebook = new Facebook($fbconfig);
-        $fb_session = $facebook->getSession();
-        if($fb_session && Yii::app()->user->isGuest)
-                    if($this->action->id != 'login')
-                        $this->redirect($this->createUrl('/user/auth/login'));
-}*/
-
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
@@ -31,8 +18,61 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>
+  // Additional JS functions here
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '485995968109492', // App ID
+      channelUrl : '//localhost/beavers/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
 
-    
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          testAPI();
+        } else if (response.status === 'not_authorized') {
+          //login();
+        } else {
+          //login();
+        }
+    });
+
+    function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+        //alert('Good to see you, ' + response.name + '.');
+    });
+    }   
+  };
+  
+  function login() {
+    FB.login(function(response) {
+        if (response.authResponse) {
+            testAPI();
+        } else {
+            // cancelled
+        }
+    });
+}
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     d.getElementsByTagName('head')[0].appendChild(js);
+   }(document));
+  /*(function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));*/
+</script>
     <div class="container" id="page">
         
         <!--<div id="header">
@@ -111,30 +151,5 @@
 </div><!-- page -->
 
 </body>
-<?php /*if(isset($fbconfig)): ?>
-<div id="fb-root"></div>
-<script>
-window.fbAsyncInit = function() {
-    FB.init({
-        appId   : '<?php echo $facebook->getAppId(); ?>',
-        session : <?php echo json_encode($fb_session); ?>, // don't refetch the session when PHP already has it
-        status  : <?php echo $fbconfig['status']; ?>, // check login status
-        cookie  : <?php echo $fbconfig['cookie']; ?>, // enable cookies to allow the server to access the session
-        xfbml   : <?php echo $fbconfig['xfbml']; ?> // parse XFBML
-    });
-
-    // whenever the user logs in, we refresh the page
-    FB.Event.subscribe('auth.login', function() {
-        window.location.reload();
-    });
-};
-
-(function() {
-    var e = document.createElement('script');
-    e.src = document.location.protocol + '//connect.facebook.net/<?php echo $fbconfig['lang']; ?>/all.js';
-    e.async = true;
-    document.getElementById('fb-root').appendChild(e);
-}());
-</script>
-<?php endif; */?>
 </html>
+
